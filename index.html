@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Little Question ❤️</title>
+
+<style>
+
+/* =========================================================
+   BASIC SETUP
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+
+    background:
+        radial-gradient(circle at 15% 20%, #ff8fab 0%, transparent 30%),
+        radial-gradient(circle at 85% 80%, #9d4edd 0%, transparent 35%),
+        linear-gradient(135deg, #ff477e, #7b2cbf);
+}
+
+
+/* =========================================================
+   BACKGROUND GLOW
+========================================================= */
+
+.background-glow {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,0.08),
+            transparent 50%
+        );
+}
+
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
+
+.hearts {
+    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+
+    bottom: -50px;
+
+    font-size: 20px;
+
+    opacity: 0.25;
+
+    animation: rise linear infinite;
+}
+
+@keyframes rise {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.35;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
+
+.card {
+
+    width: min(92%, 540px);
+
+    min-height: 560px;
+
+    padding: 42px;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.3);
+
+    border-radius: 35px;
+
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    box-shadow:
+
+        0 30px 80px rgba(0,0,0,0.25),
+
+        inset 0 1px 1px rgba(255,255,255,0.4),
+
+        inset 0 -1px 1px rgba(255,255,255,0.05);
+
+    z-index: 10;
+
+    overflow: hidden;
+}
+
+
+/* Glass shine */
+
+.card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    top: -180px;
+    left: -150px;
+
+    background: rgba(255,255,255,0.15);
+
+    border-radius: 50%;
+
+    filter: blur(20px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGES
+========================================================= */
+
+.page {
+
+    width: 100%;
+
+    display: none;
+
+    animation: pageIn 0.6s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes pageIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+.emoji {
+
+    text-align: center;
+
+    font-size: 70px;
+
+    margin-bottom: 15px;
+
+    animation: heartbeat 1.3s infinite;
+}
+
+@keyframes heartbeat {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+
+}
+
+h1 {
+
+    text-align: center;
+
+    font-size: clamp(28px, 6vw, 38px);
+
+    line-height: 1.15;
+
+    margin-bottom: 14px;
+}
+
+.subtitle {
+
+    text-align: center;
+
+    color: rgba(255,255,255,0.75);
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.input-group {
+
+    margin-bottom: 18px;
+}
+
+label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+
+    color: rgba(255,255,255,0.85);
+}
+
+input {
+
+    width: 100%;
+
+    padding: 15px 17px;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    outline: none;
+
+    background: rgba(255,255,255,0.1);
+
+    color: white;
+
+    font-size: 16px;
+
+    transition: 0.25s;
+}
+
+input::placeholder {
+
+    color: rgba(255,255,255,0.5);
+}
+
+input:focus {
+
+    border-color: rgba(255,255,255,0.8);
+
+    background: rgba(255,255,255,0.17);
+
+    box-shadow: 0 0 20px rgba(255,255,255,0.08);
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+button {
+
+    border: none;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    border-radius: 50px;
+
+    transition: 0.25s ease;
+}
+
+button:hover {
+
+    transform: translateY(-3px);
+}
+
+.primary {
+
+    width: 100%;
+
+    padding: 16px;
+
+    background: white;
+
+    color: #c9184a;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.primary:hover {
+
+    box-shadow: 0 18px 35px rgba(0,0,0,0.25);
+}
+
+
+/* =========================================================
+   YES / NO AREA
+========================================================= */
+
+.question-area {
+
+    height: 180px;
+
+    position: relative;
+
+    margin-top: 20px;
+}
+
+.yes-button {
+
+    position: absolute;
+
+    left: 22%;
+
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 16px 32px;
+
+    background: white;
+
+    color: #d4145a;
+
+    z-index: 2;
+}
+
+.no-button {
+
+    position: absolute;
+
+    left: 72%;
+
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 16px 32px;
+
+    background: rgba(255,255,255,0.13);
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,0.3);
+
+    z-index: 3;
+}
+
+
+/* =========================================================
+   PLAYFUL MESSAGE
+========================================================= */
+
+.warning {
+
+    text-align: center;
+
+    height: 25px;
+
+    color: rgba(255,255,255,0.75);
+
+    font-size: 14px;
+
+    margin-top: 5px;
+
+    transition: 0.2s;
+}
+
+
+/* =========================================================
+   DATE PAGE
+========================================================= */
+
+.date-card {
+
+    padding-top: 5px;
+}
+
+.date-input {
+
+    margin-bottom: 20px;
+}
+
+.date-input input {
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.success {
+
+    text-align: center;
+}
+
+.success-heart {
+
+    font-size: 85px;
+
+    animation:
+        heartbeat 1.2s infinite,
+        floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+.final-message {
+
+    margin-top: 10px;
+
+    font-size: 18px;
+
+    color: rgba(255,255,255,0.8);
+
+    line-height: 1.6;
+}
+
+.details {
+
+    margin-top: 25px;
+
+    padding: 22px;
+
+    border-radius: 22px;
+
+    background: rgba(255,255,255,0.1);
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    line-height: 2;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   SMALL SCREEN
+========================================================= */
+
+@media(max-width: 500px) {
+
+    .card {
+
+        min-height: 550px;
+
+        padding: 30px 22px;
+
+        border-radius: 28px;
+    }
+
+    .question-area {
+
+        height: 200px;
+    }
+
+    .yes-button {
+
+        left: 25%;
+    }
+
+    .no-button {
+
+        left: 73%;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     BACKGROUND
+====================================================== -->
+
+<div class="background-glow"></div>
+
+<div class="hearts" id="hearts"></div>
+
+
+<!-- ======================================================
+     MAIN GLASS CARD
+====================================================== -->
+
+<div class="card">
+
+
+<!-- ======================================================
+     PAGE 1 — INTRODUCTION
+====================================================== -->
+
+<section class="page active" id="page1">
+
+    <div class="emoji">
+        💌
+    </div>
+
+    <h1>
+        Before I ask you something...
+    </h1>
+
+    <p class="subtitle">
+        I need a few details first.<br>
+        Don't worry... there's nothing scary here.
+    </p>
+
+
+    <div class="input-group">
+
+        <label>
+            What's your name?
+        </label>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Your beautiful name..."
+        >
+
+    </div>
+
+
+    <div class="input-group">
+
+        <label>
+            How old are you?
+        </label>
+
+        <input
+            type="number"
+            id="age"
+            placeholder="Your age"
+            min="18"
+        >
+
+    </div>
+
+
+    <div class="input-group">
+
+        <label>
+            What's your favourite thing to do?
+        </label>
+
+        <input
+            type="text"
+            id="favorite"
+            placeholder="Movies, food, beach, gaming..."
+        >
+
+    </div>
+
+
+    <button
+        class="primary"
+        onclick="begin()"
+    >
+        Continue ❤️
+    </button>
+
+</section>
+
+
+
+<!-- ======================================================
+     PAGE 2 — THE QUESTION
+====================================================== -->
+
+<section class="page" id="page2">
+
+    <div class="emoji">
+        🥹
+    </div>
+
+    <h1 id="question">
+        Will you go on a date with me?
+    </h1>
+
+    <p class="subtitle">
+        There is only one correct answer...
+    </p>
+
+
+    <div class="question-area" id="questionArea">
+
+        <button
+            class="yes-button"
+            id="yesButton"
+            onclick="yesAnswer()"
+        >
+            Yes ❤️
+        </button>
+
+
+        <button
+            class="no-button"
+            id="noButton"
+        >
+            No 😭
+        </button>
+
+    </div>
+
+
+    <div
+        class="warning"
+        id="warning"
+    >
+        Choose wisely...
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     PAGE 3 — CHOOSE DATE
+====================================================== -->
+
+<section class="page" id="page3">
+
+    <div class="emoji">
+        📅
+    </div>
+
+    <h1>
+        It's a date! ❤️
+    </h1>
+
+    <p class="subtitle">
+        Okay <span id="dateName"></span>...
+        now let's decide when.
+    </p>
+
+
+    <div class="date-card">
+
+        <div class="input-group date-input">
+
+            <label>
+                Pick a date
+            </label>
+
+            <input
+                type="date"
+                id="date"
+            >
+
+        </div>
+
+
+        <div class="input-group date-input">
+
+            <label>
+                Pick a time
+            </label>
+
+            <input
+                type="time"
+                id="time"
+            >
+
+        </div>
+
+
+        <button
+            class="primary"
+            onclick="confirmDate()"
+        >
+            Confirm our date 💕
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     PAGE 4 — FINAL
+====================================================== -->
+
+<section class="page success" id="page4">
+
+    <div class="success-heart">
+        💕
+    </div>
+
+    <h1>
+        I can't wait to see you!
+    </h1>
+
+    <p class="final-message">
+
+        <span id="finalName"></span>,
+        it's officially happening.
+
+        <br>
+
+        You just made my day. 🥰
+
+    </p>
+
+
+    <div class="details">
+
+        📅 <strong>Date</strong><br>
+
+        <span id="finalDate"></span>
+
+        <br><br>
+
+        ⏰ <strong>Time</strong><br>
+
+        <span id="finalTime"></span>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   CREATE FLOATING HEARTS
+========================================================= */
+
+const heartsContainer =
+    document.getElementById("hearts");
+
+const heartSymbols =
+    ["❤️","💕","💗","💖","💓"];
+
+for(let i = 0; i < 20; i++){
+
+    const heart =
+        document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerText =
+        heartSymbols[
+            Math.floor(
+                Math.random() *
+                heartSymbols.length
+            )
+        ];
+
+    heart.style.left =
+        Math.random() * 100 + "%";
+
+    heart.style.animationDuration =
+        (6 + Math.random() * 8) + "s";
+
+    heart.style.animationDelay =
+        Math.random() * 8 + "s";
+
+    heart.style.fontSize =
+        (12 + Math.random() * 18) + "px";
+
+    heartsContainer.appendChild(heart);
+}
+
+
+/* =========================================================
+   PAGE SWITCHING
+========================================================= */
+
+function showPage(number){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+
+            page.classList.remove("active");
+
+        });
+
+    document
+        .getElementById("page" + number)
+        .classList.add("active");
+}
+
+
+
+/* =========================================================
+   REGISTRATION
+========================================================= */
+
+function begin(){
+
+    const name =
+        document
+        .getElementById("name")
+        .value
+        .trim();
+
+    const age =
+        document
+        .getElementById("age")
+        .value;
+
+    const favorite =
+        document
+        .getElementById("favorite")
+        .value
+        .trim();
+
+
+    if(!name || !age || !favorite){
+
+        alert(
+            "Please fill in all the details first ❤️"
+        );
+
+        return;
+    }
+
+
+    if(age < 18){
+
+        alert(
+            "This little website is for adults only."
+        );
+
+        return;
+    }
+
+
+    document
+        .getElementById("question")
+        .innerText =
+        `Will you go on a date with me, ${name}?`;
+
+
+    document
+        .getElementById("dateName")
+        .innerText =
+        name;
+
+
+    showPage(2);
+}
+
+
+
+/* =========================================================
+   NO BUTTON — THE FUN PART
+========================================================= */
+
+const noButton =
+    document.getElementById("noButton");
+
+const questionArea =
+    document.getElementById("questionArea");
+
+const warning =
+    document.getElementById("warning");
+
+let attempts = 0;
+
+
+function moveNoButton(){
+
+    attempts++;
+
+
+    /*
+        Messages become more dramatic
+        each time they try to press NO.
+    */
+
+    const messages = [
+
+        "Choose wisely...",
+
+        "Are you sure? 👀",
+
+        "Really? 😭",
+
+        "You missed it!",
+
+        "Nice try 😂",
+
+        "The button said NO to your NO.",
+
+        "I don't think you meant that...",
+
+        "Okay, you're making this difficult 😭",
+
+        "JUST SAY YES 😂❤️"
+
+    ];
+
+
+    warning.innerText =
+        messages[
+            Math.min(
+                attempts,
+                messages.length - 1
+            )
+        ];
+
+
+    /*
+        Get the dimensions of the
+        question area.
+    */
+
+    const areaWidth =
+        questionArea.clientWidth;
+
+    const areaHeight =
+        questionArea.clientHeight;
+
+
+    const buttonWidth =
+        noButton.offsetWidth;
+
+    const buttonHeight =
+        noButton.offsetHeight;
+
+
+    /*
+        Keep the button completely
+        inside the question area.
+    */
+
+    const padding = 5;
+
+
+    const maxX =
+        areaWidth -
+        buttonWidth -
+        padding;
+
+
+    const maxY =
+        areaHeight -
+        buttonHeight -
+        padding;
+
+
+    /*
+        Random position.
+    */
+
+    const randomX =
+        padding +
+        Math.random() *
+        (maxX - padding);
+
+
+    const randomY =
+        padding +
+        Math.random() *
+        (maxY - padding);
+
+
+    /*
+        IMPORTANT:
+        The button stays INSIDE
+        the question area.
+    */
+
+    noButton.style.left =
+        randomX + "px";
+
+    noButton.style.top =
+        randomY + "px";
+
+    noButton.style.transform =
+        "none";
+
+
+    /*
+        Make the YES button slightly
+        bigger as they keep refusing.
+    */
+
+    const yesButton =
+        document.getElementById("yesButton");
+
+    const newSize =
+        16 + Math.min(attempts * 1.5, 10);
+
+    yesButton.style.fontSize =
+        newSize + "px";
+
+    yesButton.style.padding =
+        `${16 + attempts}px ${32 + attempts}px`;
+}
+
+
+
+/*
+    Desktop
+*/
+
+noButton.addEventListener(
+    "mouseenter",
+    moveNoButton
+);
+
+
+/*
+    Mobile
+*/
+
+noButton.addEventListener(
+    "touchstart",
+    function(event){
+
+        event.preventDefault();
+
+        moveNoButton();
+
+    }
+);
+
+
+/*
+    If somehow clicked...
+*/
+
+noButton.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+        moveNoButton();
+
+    }
+);
+
+
+
+/* =========================================================
+   YES BUTTON
+========================================================= */
+
+function yesAnswer(){
+
+    showPage(3);
+
+
+    /*
+        Prevent choosing a date in the past.
+    */
+
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+    document
+        .getElementById("date")
+        .min = today;
+}
+
+
+
+/* =========================================================
+   CONFIRM DATE
+========================================================= */
+
+function confirmDate(){
+
+    const date =
+        document
+        .getElementById("date")
+        .value;
+
+    const time =
+        document
+        .getElementById("time")
+        .value;
+
+
+    if(!date || !time){
+
+        alert(
+            "Pick a date and time first ❤️"
+        );
+
+        return;
+    }
+
+
+    const name =
+        document
+        .getElementById("name")
+        .value;
+
+
+    /*
+        Format date nicely.
+    */
+
+    const dateObject =
+        new Date(
+            date + "T00:00:00"
+        );
+
+
+    const formattedDate =
+        dateObject.toLocaleDateString(
+            "en-US",
+            {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+
+
+    /*
+        Put everything on
+        the final screen.
+    */
+
+    document
+        .getElementById("finalName")
+        .innerText =
+        name;
+
+
+    document
+        .getElementById("finalDate")
+        .innerText =
+        formattedDate;
+
+
+    document
+        .getElementById("finalTime")
+        .innerText =
+        time;
+
+
+    showPage(4);
+
+
+    /*
+        Little celebration.
+    */
+
+    createCelebration();
+}
+
+
+
+/* =========================================================
+   CELEBRATION EFFECT
+========================================================= */
+
+function createCelebration(){
+
+    for(let i = 0; i < 30; i++){
+
+        const heart =
+            document.createElement("div");
+
+        heart.innerText =
+            heartSymbols[
+                Math.floor(
+                    Math.random() *
+                    heartSymbols.length
+                )
+            ];
+
+        heart.style.position =
+            "fixed";
+
+        heart.style.left =
+            "50%";
+
+        heart.style.top =
+            "50%";
+
+        heart.style.fontSize =
+            (15 + Math.random() * 25) + "px";
+
+        heart.style.pointerEvents =
+            "none";
+
+        heart.style.zIndex =
+            "100";
+
+        document.body.appendChild(heart);
+
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            150 + Math.random() * 350;
+
+        const x =
+            Math.cos(angle) * distance;
+
+        const y =
+            Math.sin(angle) * distance;
+
+
+        heart.animate(
+
+            [
+                {
+                    transform:
+                        "translate(-50%, -50%) scale(0)",
+                    opacity: 1
+                },
+
+                {
+                    transform:
+                        `translate(
+                            calc(-50% + ${x}px),
+                            calc(-50% + ${y}px)
+                        )
+                        scale(1.5)`,
+
+                    opacity: 0
+                }
+            ],
+
+            {
+                duration:
+                    1200 + Math.random() * 800,
+
+                easing:
+                    "cubic-bezier(.17,.67,.83,.67)"
+            }
+
+        ).onfinish = () => {
+
+            heart.remove();
+
+        };
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
